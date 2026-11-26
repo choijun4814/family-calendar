@@ -1,0 +1,136 @@
+<!DOCTYPE html><html lang="ko"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#0c1020"><link rel="manifest" href="manifest.json">
+<link rel="icon" href="icon-192.png"><link rel="apple-touch-icon" href="icon-192.png"><title>우리집 달력</title>
+<style>
+:root{--c:rgba(255,255,255,.055);--l:rgba(255,255,255,.1);--g:#d4a85a;--g2:#f4dfae;--t:#eef0f7;--m:#8e95ab;--r:#ff8f8f;--b:#8fb3ff}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent;margin:0}
+html,body{height:100%}
+body{background:radial-gradient(800px 480px at 90% -10%,#2b2358 0,transparent 62%),radial-gradient(640px 460px at -10% 105%,#3b2d14 0,transparent 58%),#0c1020;color:var(--t);font:15px/1.45 Pretendard,'Noto Sans KR',system-ui,sans-serif;display:flex;flex-direction:column;padding-top:env(safe-area-inset-top)}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+.ic{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;flex:none}
+header{display:flex;justify-content:space-between;align-items:center;padding:16px 18px 8px}
+header div{display:flex;align-items:center;gap:8px}
+h1{font:600 24px 'Noto Serif KR',Georgia,serif;background:linear-gradient(90deg,var(--g2),var(--g));-webkit-background-clip:text;background-clip:text;color:transparent;min-width:128px;text-align:center}
+.ar{font-size:26px;width:36px;height:36px;border-radius:50%;color:var(--g2);border:1px solid var(--l)}
+.pill{border:1px solid var(--l);background:var(--c);border-radius:99px;padding:6px 14px;font-size:13px;color:var(--g2)}
+main{flex:1;overflow:auto;padding:0 14px 96px}
+[hidden]{display:none!important}
+.wk,.gr{display:grid;grid-template-columns:repeat(7,1fr)}
+.wk div{text-align:center;color:var(--m);font-size:12px;padding:6px 0}
+.gr{background:var(--c);border:1px solid var(--l);border-radius:22px;overflow:hidden;backdrop-filter:blur(10px)}
+.cell{min-height:76px;padding:6px 1px 4px;text-align:center;border-top:1px solid var(--l);display:flex;flex-direction:column;align-items:center;gap:1px}
+.cell:nth-child(-n+7){border-top:0}
+.cell.o{opacity:.32}.cell.t{background:rgba(212,168,90,.15);box-shadow:inset 0 0 0 1px rgba(244,223,174,.5)}
+.dn{font-size:13px}.lu{font-size:9.5px;color:var(--m);height:12px;white-space:nowrap}.lu em{font-style:normal;color:var(--r)}
+.bd{width:31px;height:31px;border-radius:50%;display:grid;place-items:center;font:700 13px Georgia,serif}
+.bd:empty::after{content:'';width:4px;height:4px;border-radius:50%;background:var(--l)}
+.bd.D{background:linear-gradient(145deg,var(--g2),#c4943f);color:#2b1d05;box-shadow:0 3px 10px rgba(212,168,90,.35)}
+.bd.N{background:linear-gradient(145deg,#5257cf,#23276f);color:#e1e4ff;box-shadow:0 3px 10px rgba(82,87,207,.45)}
+.dots{display:flex;gap:3px;height:6px;margin-top:2px}.dots i{width:5px;height:5px;border-radius:50%}
+.lg{display:flex;flex-wrap:wrap;gap:6px 14px;justify-content:center;color:var(--m);font-size:12px;padding:14px 0}
+.lg span{display:flex;align-items:center;gap:5px}.lg i{width:9px;height:9px;border-radius:50%}
+nav{position:fixed;left:0;right:0;bottom:0;display:flex;justify-content:space-around;padding:8px 10px calc(8px + env(safe-area-inset-bottom));background:rgba(12,16,32,.85);backdrop-filter:blur(18px);border-top:1px solid var(--l)}
+nav button{display:flex;flex-direction:column;align-items:center;gap:2px;font-size:11px;color:var(--m);padding:5px 16px;border-radius:16px}
+nav button.on{color:var(--g2);background:rgba(244,223,174,.09)}
+.sec{display:flex;justify-content:space-between;align-items:center;padding:20px 4px 6px}
+h3{font:600 22px 'Noto Serif KR',Georgia,serif;color:var(--g2)}h3 small{font:13px system-ui;color:var(--m);margin-left:6px}
+h2{font:600 21px 'Noto Serif KR',Georgia,serif;color:var(--g2)}.mu{color:var(--m);font-size:13px}
+.card{background:var(--c);border:1px solid var(--l);border-radius:18px;padding:14px;margin:10px 0;display:flex;align-items:center;gap:12px}
+.card.k{display:block}
+.av{width:46px;height:46px;border-radius:50%;display:grid;place-items:center;font:600 18px 'Noto Serif KR',serif;background:linear-gradient(145deg,#3d3274,#1b1a3f);border:1px solid var(--g);color:var(--g2);flex:none}
+.dd{margin-left:auto;text-align:right}.dd b{font:700 24px Georgia,serif;color:var(--g2)}.gd{font-size:12.5px;color:var(--g)}
+.x{font-size:12px;color:var(--m);padding:2px 0}
+.li{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid var(--l)}
+.sh{position:fixed;inset:0;background:rgba(0,0,0,.55);display:none;align-items:flex-end;z-index:9}.sh.on{display:flex}
+.sh>div{width:100%;max-height:84%;overflow:auto;background:#151b30;border-top:1px solid var(--l);border-radius:28px 28px 0 0;padding:22px 20px calc(24px + env(safe-area-inset-bottom))}
+input,select{width:100%;background:rgba(255,255,255,.07);border:1px solid var(--l);border-radius:12px;padding:11px 12px;color:var(--t);font:inherit;margin:5px 0 8px;color-scheme:dark}
+.btn{display:block;background:linear-gradient(135deg,var(--g2),var(--g));color:#2b1d05;font-weight:700;border-radius:14px;padding:12px;width:100%;margin-top:6px}
+.btn.s{background:var(--c);color:var(--t);border:1px solid var(--l)}
+</style></head><body>
+<svg width="0" height="0" style="position:absolute"><defs>
+<symbol id="i-cal"><rect x="3" y="4.5" width="18" height="17" rx="3"/><path d="M16 2.5v4M8 2.5v4M3 10h18"/></symbol>
+<symbol id="i-gift"><path d="M20 12v9H4v-9M2.5 7.5h19V12h-19zM12 21V7.5M12 7.5H8a2.3 2.3 0 110-4.6C11 2.9 12 7.5 12 7.5zM12 7.5h4a2.3 2.3 0 100-4.6C13 2.9 12 7.5 12 7.5z"/></symbol>
+<symbol id="i-car"><path d="M3 15l1.8-5.5A2 2 0 016.7 8h10.6a2 2 0 011.9 1.5L21 15v3.5h-3V17H6v1.5H3zM3 15h18"/><circle cx="7.5" cy="12.3" r=".7"/><circle cx="16.5" cy="12.3" r=".7"/></symbol>
+<symbol id="i-bell"><path d="M6 9a6 6 0 0112 0c0 6 2.5 8 2.5 8h-17S6 15 6 9M10 20.5a2 2 0 004 0"/></symbol>
+<symbol id="i-moon"><path d="M20.5 13.5A8.5 8.5 0 1110.5 3.5a6.8 6.8 0 0010 10z"/></symbol>
+<symbol id="i-sun"><circle cx="12" cy="12" r="4"/><path d="M12 2.5v2M12 19.5v2M2.5 12h2M19.5 12h2M5.3 5.3l1.4 1.4M17.3 17.3l1.4 1.4M5.3 18.7l1.4-1.4M17.3 6.7l1.4-1.4"/></symbol>
+<symbol id="i-cap"><path d="M2 9l10-5 10 5-10 5zM6 11.2V16c3 2.6 9 2.6 12 0v-4.8"/></symbol>
+</defs></svg>
+<header><div><button class="ar" id="pv">‹</button><h1 id="ym"></h1><button class="ar" id="nx">›</button></div><button class="pill" id="tdy">오늘</button></header>
+<main>
+<section id="v-cal"><div class="wk"><div style="color:var(--r)">일</div><div>월</div><div>화</div><div>수</div><div>목</div><div>금</div><div style="color:var(--b)">토</div></div><div class="gr" id="gr"></div>
+<div class="lg"><span><i style="background:var(--g)"></i>데이</span><span><i style="background:#5257cf"></i>나이트</span><span><i style="background:#ff9ec4"></i>생일</span><span><i style="background:#6fe0b0"></i>자동차</span><span><i style="background:#7fb7ff"></i>교육</span></div></section>
+<section id="v-bd" hidden></section><section id="v-car" hidden></section><section id="v-set" hidden></section>
+</main>
+<nav><button data-v="cal" class="on"><svg class="ic" viewBox="0 0 24 24"><use href="#i-cal"/></svg>달력</button><button data-v="bd"><svg class="ic" viewBox="0 0 24 24"><use href="#i-gift"/></svg>생일</button><button data-v="car"><svg class="ic" viewBox="0 0 24 24"><use href="#i-car"/></svg>자동차</button><button data-v="set"><svg class="ic" viewBox="0 0 24 24"><use href="#i-bell"/></svg>알람·설정</button></nav>
+<div class="sh" id="sh"><div id="sb"></div></div><input type="file" id="fi" accept=".json" hidden>
+<script>
+const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)],P=n=>String(n).padStart(2,'0'),K=d=>d.getFullYear()+'-'+P(d.getMonth()+1)+'-'+P(d.getDate()),D0=(y,m,d)=>new Date(y,m,d,12),WD='일월화수목금토',E=s=>String(s).replace(/[&<>"]/g,c=>'&#'+c.charCodeAt(0)+';'),td=()=>K(new Date()),dif=(a,b)=>Math.round((new Date(a+'T12:00')-new Date(b+'T12:00'))/864e5),I=n=>`<svg class="ic" viewBox="0 0 24 24"><use href="#i-${n}"/></svg>`;
+const seed=[['엄마',1950,10,29,1],['장모님',1955,11,15,1],['나',1978,2,4,1],['아들',2017,4,18,0],['아버지',1946,3,28,1],['큰누나',1974,4,17,1],['작은누나',1976,5,1,1],['형님',1972,6,25,1],['아내',1982,8,26,0],['장인어른',1953,10,6,1]].map(a=>({n:a[0],y:a[1],m:a[2],d:a[3],l:a[4]}));
+let S;try{S=JSON.parse(localStorage.getItem('fc1'))}catch(e){}S=S||{bd:seed,car:[],tr:['2027-01-07']};
+const sv=()=>{try{localStorage.setItem('fc1',JSON.stringify(S))}catch(e){}};
+const PAT='DD..NNN..DD...NN..DDD..NN...',A0=D0(2026,10,3),sh=d=>PAT[(Math.round((D0(d.getFullYear(),d.getMonth(),d.getDate())-A0)/864e5)%28+28)%28];
+const F=new Intl.DateTimeFormat('en-u-ca-chinese',{month:'numeric',day:'numeric',timeZone:'Asia/Seoul'}),LC={};
+const lun=d=>{const k=K(d);if(LC[k])return LC[k];let m,l,dd;F.formatToParts(d).forEach(x=>{if(x.type=='month'){m=parseInt(x.value);l=/\D/.test(x.value)}if(x.type=='day')dd=+x.value});return LC[k]=[m,dd,l]};
+const LY={},ly=y=>LY[y]||(LY[y]=(()=>{const o={};for(let d=D0(y,0,1);d.getFullYear()==y;d=D0(y,d.getMonth(),d.getDate()+1)){const[m,dd,l]=lun(d);if(!l)(o[m+'-'+dd]=o[m+'-'+dd]||[]).push(K(d))}return o})());
+const FH={'1-1':'신정','3-1':'삼일절','5-5':'어린이날','6-6':'현충일','8-15':'광복절','10-3':'개천절','10-9':'한글날','12-25':'성탄절'};
+const hol=d=>{const h=FH[(d.getMonth()+1)+'-'+d.getDate()];if(h)return h;const[m,dd,l]=lun(d);if(l)return'';const n=lun(new Date(d.getTime()+864e5));
+ if(m==1&&dd==1)return'설날';if((m==1&&dd==2)||(n[0]==1&&n[1]==1&&!n[2]))return'연휴';if(m==8&&dd==15)return'추석';if(m==8&&(dd==14||dd==16))return'연휴';if(m==4&&dd==8)return'부처님오신날';return''};
+const bdOn=d=>{const k=K(d),y=d.getFullYear();return S.bd.filter(p=>p.l?(ly(y)[p.m+'-'+p.d]||[]).includes(k):(p.m==d.getMonth()+1&&p.d==d.getDate()))};
+const nextB=p=>{const t=td(),y=new Date().getFullYear();for(const Y of[y,y+1]){const f=(p.l?(ly(Y)[p.m+'-'+p.d]||[]):[Y+'-'+P(p.m)+'-'+P(p.d)]).find(s=>s>=t);if(f)return f}};
+const trD=()=>{const o={};S.tr.forEach(b=>{let d=new Date(b+'T12:00');for(let i=0;i<60;i++){d=new Date(d.getTime()+864e5);if(sh(d)=='N'){o[K(new Date(d.getTime()-864e5))]=b;break}}});return o};
+const addM=(s,n)=>{const d=new Date(s+'T12:00');d.setMonth(d.getMonth()+n);return K(d)},carOn=k=>S.car.filter(r=>r.dt==k),dueOn=k=>S.car.filter(r=>r.mo&&addM(r.dt,+r.mo)==k);
+let cy=new Date().getFullYear(),cm=new Date().getMonth();
+function rc(){$('#ym').textContent=cy+'년 '+(cm+1)+'월';
+ const f=D0(cy,cm,1),st=D0(cy,cm,1-f.getDay()),n=Math.ceil((f.getDay()+new Date(cy,cm+1,0).getDate())/7)*7,tr=trD(),tk=td();let h='';
+ for(let i=0;i<n;i++){const d=D0(st.getFullYear(),st.getMonth(),st.getDate()+i),k=K(d),w=d.getDay(),ho=hol(d),s=sh(d),[lm,ld,ll]=lun(d);
+  h+=`<div class="cell${d.getMonth()!=cm?' o':''}${k==tk?' t':''}" data-k="${k}"><span class="dn" style="color:${ho||w==0?'var(--r)':w==6?'var(--b)':'inherit'}">${d.getDate()}</span><span class="lu">${ho?`<em>${ho.slice(0,4)}</em>`:!ll&&(ld==1||ld==15)?lm+'.'+ld:''}</span><span class="bd ${s=='.'?'':s}">${s=='.'?'':s}</span><span class="dots">${bdOn(d).length?'<i style="background:#ff9ec4"></i>':''}${carOn(k).length+dueOn(k).length?'<i style="background:#6fe0b0"></i>':''}${tr[k]?'<i style="background:#7fb7ff"></i>':''}</span></div>`}
+ $('#gr').innerHTML=h;$$('.cell').forEach(e=>e.onclick=()=>det(e.dataset.k))}
+const sheet=h=>{$('#sb').innerHTML=h;$('#sh').classList.add('on')},cl=()=>$('#sh').classList.remove('on');
+$('#sh').onclick=e=>{if(e.target.id=='sh')cl()};
+function det(k){const d=new Date(k+'T12:00'),s=sh(d),[lm,ld,ll]=lun(d),ho=hol(d),tr=trD()[k];
+ const row=(i,c,t,u)=>`<div class="card"><span style="color:${c}">${I(i)}</span><div><b>${t}</b><div class="mu">${u||''}</div></div></div>`;
+ let h=`<h2>${d.getMonth()+1}월 ${d.getDate()}일 ${WD[d.getDay()]}요일</h2><p class="mu">${d.getFullYear()}년, 음력 ${ll?'윤':''}${lm}월 ${ld}일${ho?', '+ho:''}</p>`;
+ h+=s=='D'?row('sun','var(--g2)','데이 근무','기상 알람 당일 오전 6:10'):s=='N'?row('moon','#a3a8ff','나이트 근무','기상 알람 전날 오후 4:10'):row('cal','var(--m)','휴무');
+ if(tr)h+=row('cap','#7fb7ff','사내교육','오후 4시까지 출근 (다음 나이트 전날)');
+ bdOn(d).forEach(p=>h+=row('gift','#ff9ec4',E(p.n)+' 생일',(p.l?'음력 ':'양력 ')+p.m+'월 '+p.d+'일'));
+ carOn(k).forEach(r=>h+=row('car','#6fe0b0',E(r.t),(r.cost?Number(r.cost).toLocaleString()+'원 ':'')+E(r.memo||'')));
+ dueOn(k).forEach(r=>h+=row('car','#6fe0b0',E(r.t)+' 예정일','다음 시공 시기'));sheet(h)}
+function rb(){const t=td(),L=S.bd.map((p,i)=>{const nb=nextB(p);return{p,i,nb,dd:nb?dif(nb,t):9999}}).sort((a,b)=>a.dd-b.dd);
+ $('#v-bd').innerHTML=`<div class="sec"><h3>가족 생일<small>${S.bd.length}명</small></h3><button class="pill" data-a="abd">+ 추가</button></div>`+L.map(o=>{const p=o.p,nb=o.nb;return`<div class="card"><div class="av">${E(p.n[0])}</div><div><b>${E(p.n)}</b><div class="mu">${p.y}-${P(p.m)}-${P(p.d)} ${p.l?'음력':'양력'}</div><div class="gd">${nb?nb.replace(/-/g,'.')+' ('+WD[new Date(nb+'T12:00').getDay()]+') '+(nb.slice(0,4)-p.y)+'번째':''}</div></div><div class="dd"><b>${o.dd==0?'D-DAY':'D-'+o.dd}</b><br><button class="x" data-a="dbd" data-i="${o.i}">삭제</button></div></div>`}).join('')}
+const TS=['유리막 코팅','광택','세차','엔진오일','기타'],last=t=>{const r=S.car.filter(r=>r.t==t).sort((a,b)=>a.dt<b.dt?1:-1)[0];return r?r.dt.replace(/-/g,'.')+', '+dif(td(),r.dt)+'일 전':'기록 없음'};
+function rcar(){const L=S.car.map((r,i)=>({r,i})).sort((a,b)=>a.r.dt<b.r.dt?1:-1);
+ $('#v-car').innerHTML=`<div class="sec"><h3>자동차 관리</h3><button class="pill" data-a="acar">+ 기록</button></div>`+['유리막 코팅','광택'].map(t=>`<div class="card"><span style="color:#6fe0b0">${I('car')}</span><div><b>${t}</b><div class="mu">마지막 시공 ${last(t)}</div></div></div>`).join('')+(L.length?'':'<p class="mu" style="padding:18px 4px">아직 기록이 없어요. 오른쪽 위 + 기록으로 시공일을 남겨 보세요.</p>')+L.map(o=>{const r=o.r,du=r.mo?addM(r.dt,+r.mo):'';return`<div class="card"><span style="color:#6fe0b0">${I('car')}</span><div><b>${E(r.t)}</b><div class="mu">${r.dt.replace(/-/g,'.')} ${r.cost?Number(r.cost).toLocaleString()+'원':''} ${E(r.memo||'')}</div>${du?`<div class="gd">다음 예정 ${du.replace(/-/g,'.')} (D-${dif(du,td())})</div>`:''}</div><button class="x dd" data-a="dcar" data-i="${o.i}">삭제</button></div>`}).join('')}
+function rs(){const m=trD(),inv=b=>Object.keys(m).find(k=>m[k]==b);
+ $('#v-set').innerHTML=`<div class="sec"><h3>알람·설정</h3></div>
+<div class="card k"><b>기상 알람</b><div class="mu">데이 당일 06:10, 나이트 전날 16:10, 교육일 14:30에 알림이 울려요. 파일을 열면 삼성·구글 캘린더에 등록돼요.</div><select id="mo"><option value="1">앞으로 1개월</option><option value="3" selected>앞으로 3개월</option><option value="6">앞으로 6개월</option></select><button class="btn" data-a="ics">알람 파일 받기</button></div>
+<div class="card k"><b>사내교육</b><div class="mu">교육 첫날을 넣으면 그다음 나이트 전날이 교육일(16:00까지 출근)로 표시돼요.</div>${S.tr.map((b,i)=>{const k=inv(b);return`<div class="li"><span>${b} → 교육일 ${k?k.slice(5).replace('-','/')+' ('+WD[new Date(k+'T12:00').getDay()]+')':''}</span><button class="x" data-a="dtr" data-i="${i}">삭제</button></div>`}).join('')}<input type="date" id="ntr"><button class="btn s" data-a="atr">교육 추가</button></div>
+<div class="card k"><b>백업</b><div class="mu">폰을 바꾸거나 브라우저 데이터를 지우기 전에 저장해 두세요.</div><button class="btn s" data-a="exp">백업 저장</button><button class="btn s" data-a="imp">백업 불러오기</button></div>
+<button class="btn" id="inst" data-a="inst" ${window.dp?'':'hidden'}>앱 설치</button>`}
+const dl=(n,t,c)=>{const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([c],{type:t}));a.download=n;a.click()};
+const AC={
+ abd:()=>sheet(`<h2>생일 추가</h2><input id="fn" placeholder="이름"><select id="fl"><option value="1">음력</option><option value="0">양력</option></select><input id="fd" placeholder="생년월일 예) 1980-03-15" inputmode="numeric"><button class="btn" data-a="sbd">저장</button>`),
+ sbd:()=>{const n=$('#fn').value.trim(),m=$('#fd').value.match(/^(\d{4})-(\d{1,2})-(\d{1,2})$/);if(!n||!m)return alert('이름과 생년월일(YYYY-MM-DD)을 확인해 주세요');S.bd.push({n,y:+m[1],m:+m[2],d:+m[3],l:+$('#fl').value});sv();cl();rb();rc()},
+ dbd:a=>{if(confirm('삭제할까요?')){S.bd.splice(+a.dataset.i,1);sv();rb();rc()}},
+ acar:()=>sheet(`<h2>관리 기록</h2><select id="ct">${TS.map(t=>`<option>${t}</option>`).join('')}</select><input type="date" id="cd" value="${td()}"><input id="cc" type="number" inputmode="numeric" placeholder="비용(원)"><input id="cm" placeholder="업체, 메모"><input id="cn" type="number" inputmode="numeric" placeholder="다음 시공 주기(개월), 선택"><button class="btn" data-a="scar">저장</button>`),
+ scar:()=>{S.car.push({t:$('#ct').value,dt:$('#cd').value||td(),cost:$('#cc').value,memo:$('#cm').value,mo:$('#cn').value});sv();cl();rcar();rc()},
+ dcar:a=>{if(confirm('삭제할까요?')){S.car.splice(+a.dataset.i,1);sv();rcar();rc()}},
+ atr:()=>{const v=$('#ntr').value;if(v&&!S.tr.includes(v)){S.tr.push(v);S.tr.sort();sv();rs();rc()}},
+ dtr:a=>{S.tr.splice(+a.dataset.i,1);sv();rs();rc()},
+ exp:()=>dl('famcal-backup.json','application/json',JSON.stringify(S)),imp:()=>$('#fi').click(),
+ inst:()=>window.dp&&window.dp.prompt(),
+ ics:()=>{const mo=+$('#mo').value,L=['BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//FamCal//KO'],tr=trD(),st=new Date().toISOString().replace(/[-:]|\.\d+/g,''),s=x=>x.getFullYear()+P(x.getMonth()+1)+P(x.getDate())+'T'+P(x.getHours())+P(x.getMinutes())+'00';let id=0;
+  const ev=(d,h,mi,t)=>{const a=new Date(d.getFullYear(),d.getMonth(),d.getDate(),h,mi);L.push('BEGIN:VEVENT','UID:fc'+id+++'-'+s(a)+'@famcal','DTSTAMP:'+st,'DTSTART:'+s(a),'DTEND:'+s(new Date(a.getTime()+18e5)),'SUMMARY:'+t,'BEGIN:VALARM','TRIGGER:PT0S','ACTION:DISPLAY','DESCRIPTION:'+t,'END:VALARM','END:VEVENT')};
+  for(let i=0;i<mo*31;i++){const d=D0(new Date().getFullYear(),new Date().getMonth(),new Date().getDate()+i),p=new Date(d.getTime()-864e5),c=sh(d);
+   if(c=='D')ev(d,6,10,'데이근무 기상');if(c=='N'&&!tr[K(p)])ev(p,16,10,'나이트근무 기상');if(tr[K(d)])ev(d,14,30,'사내교육 16시까지 출근')}
+  L.push('END:VCALENDAR');dl('shift-alarm.ics','text/calendar',L.join('\r\n'))}};
+document.addEventListener('click',e=>{const a=e.target.closest('[data-a]');if(a&&AC[a.dataset.a])AC[a.dataset.a](a)});
+$('#fi').onchange=e=>{const r=new FileReader();r.onload=()=>{try{S=JSON.parse(r.result);sv();location.reload()}catch(x){alert('백업 파일을 읽지 못했어요')}};r.readAsText(e.target.files[0])};
+const R={cal:rc,bd:rb,car:rcar,set:rs};
+$$('nav button').forEach(b=>b.onclick=()=>{const v=b.dataset.v;$$('nav button').forEach(x=>x.classList.toggle('on',x==b));['cal','bd','car','set'].forEach(x=>$('#v-'+x).hidden=x!=v);$('header').hidden=v!='cal';R[v]()});
+$('#pv').onclick=()=>{cm--;if(cm<0){cm=11;cy--}rc()};$('#nx').onclick=()=>{cm++;if(cm>11){cm=0;cy++}rc()};$('#tdy').onclick=()=>{cy=new Date().getFullYear();cm=new Date().getMonth();rc()};
+addEventListener('beforeinstallprompt',e=>{e.preventDefault();window.dp=e;const b=$('#inst');if(b)b.hidden=false});
+if('serviceWorker'in navigator)navigator.serviceWorker.register('sw.js');
+rc();
+</script></body></html>
