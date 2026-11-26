@@ -72,6 +72,11 @@ textarea{width:100%;min-height:84px;background:var(--c);border:1px solid var(--l
 .n .mw{left:-20%;top:6%;width:140%;height:22vw;transform:rotate(-24deg);background:radial-gradient(ellipse at center,rgba(200,185,255,.38),rgba(120,130,255,.15) 45%,transparent 70%);filter:blur(12px)}
 .tn{inset:0;background:var(--tint,transparent);transition:background .5s}.hl{left:0;right:0;bottom:0;width:100%;height:34%}
 #fy{position:fixed;inset:0;z-index:5;pointer-events:none;display:none}html[data-skin=auto] #fy{display:block}
+html[data-skin=auto] .gr{background:none;border-color:transparent;-webkit-backdrop-filter:none;backdrop-filter:none}
+html[data-skin=auto] .cell{border-top-color:rgba(255,255,255,.16)}html[data-skin=auto] .cell.t{background:none}
+html[data-skin=auto] nav{background:none;-webkit-backdrop-filter:none;backdrop-filter:none;border-top-color:transparent}
+html[data-skin=auto] #v-cal,html[data-skin=auto] header,html[data-skin=auto] nav{text-shadow:0 1px 5px rgba(0,0,0,.55)}
+html[data-skin=auto] h1{text-shadow:none;filter:drop-shadow(0 1px 4px rgba(0,0,0,.55))}html[data-skin=auto] .bd{text-shadow:none}
 </style></head><body>
 <svg width="0" height="0" style="position:absolute"><defs>
 <symbol id="i-cal"><rect x="3" y="4.5" width="18" height="17" rx="3"/><path d="M16 2.5v4M8 2.5v4M3 10h18"/></symbol>
@@ -134,7 +139,7 @@ function rs(){const m=trD(),inv=b=>Object.keys(m).find(k=>m[k]==b);
 <div class="card k"><b>기상 알람</b><div class="mu">데이 당일 06:10, 나이트 전날 16:10, 교육일 14:30에 알림이 울려요. 파일을 열면 삼성·구글 캘린더에 등록돼요.</div><select id="mo"><option value="1">앞으로 1개월</option><option value="3" selected>앞으로 3개월</option><option value="6">앞으로 6개월</option></select><button class="btn" data-a="ics">알람 파일 받기</button></div>
 <div class="card k"><b>사내교육</b><div class="mu">교육 첫날을 넣으면 그다음 나이트 전날이 교육일(16:00까지 출근)로 표시돼요.</div>${S.tr.map((b,i)=>{const k=inv(b);return`<div class="li"><span>${b} → 교육일 ${k?k.slice(5).replace('-','/')+' ('+WD[new Date(k+'T12:00').getDay()]+')':''}</span><button class="x" data-a="dtr" data-i="${i}">삭제</button></div>`}).join('')}<input type="date" id="ntr"><button class="btn s" data-a="atr">교육 추가</button></div>
 <div class="card k"><b>스킨</b><div class="sw">${SK.map(x=>`<button data-a="sk" data-v="${x[0]}" class="${S.skin==x[0]?'on':''}" title="${x[1]}" style="background:linear-gradient(135deg,${x[2]},${x[3]} 55%,${x[4]})"></button>`).join('')}</div><div class="mu" style="margin-top:8px">${SK.find(x=>x[0]==S.skin)[1]}</div></div>
-<div class="card k"><b>자동 테마</b><div class="mu">시간(아침·낮·밤)과 계절에 맞춰 하늘과 효과가 자동으로 바뀌어요. 지금은 ${window.AT?AT.label():''}</div><div class="fn"><button data-a="an" class="${S.an===0?'':'on'}">동물 ${S.an===0?'꺼짐':'켜짐'}</button><button data-a="pt" class="${S.pt===0?'':'on'}">효과 ${S.pt===0?'꺼짐':'켜짐'}</button></div></div>
+<div class="card k"><b>자동 테마</b><div class="mu">시간(아침·낮·밤)과 계절에 맞춰 하늘과 효과가 자동으로 바뀌어요. 지금은 ${window.AT?AT.label():''}</div><div class="fn"><button data-a="an" class="${S.an===0?'':'on'}">동물 ${S.an===0?'꺼짐':'켜짐'}</button><button data-a="pt" class="${S.pt===0?'':'on'}">효과 ${S.pt===0?'꺼짐':'켜짐'}</button><button data-a="sn" class="${S.sn===0?'':'on'}">새소리 ${S.sn===0?'꺼짐':'켜짐'}</button></div></div>
 <div class="card k"><b>글꼴</b><div class="fn">${FN.map(x=>`<button data-a="fn" data-v="${x[0]}" class="${S.font==x[0]?'on':''}" style="font-family:${x[2]}">${x[1]}</button>`).join('')}</div></div>
 <div class="card k"><b>빌드 정보</b><div class="mu" id="bn2">${BT}</div></div>
 <div class="card k"><b>백업</b><div class="mu">폰을 바꾸거나 브라우저 데이터를 지우기 전에 저장해 두세요.</div><button class="btn s" data-a="exp">백업 저장</button><button class="btn s" data-a="imp">백업 불러오기</button></div>
@@ -149,7 +154,7 @@ const AC={
  dcar:a=>{if(confirm('삭제할까요?')){S.car.splice(+a.dataset.i,1);sv();rcar();rc()}},
  atr:()=>{const v=$('#ntr').value;if(v&&!S.tr.includes(v)){S.tr.push(v);S.tr.sort();sv();rs();rc()}},
  dtr:a=>{S.tr.splice(+a.dataset.i,1);sv();rs();rc()},
- chip:a=>{const t=$('#mt');t.value+=(t.value&&!/\s$/.test(t.value)?' ':'')+a.dataset.t},smm:a=>{const v=$('#mt').value.trim();v?S.memo[a.dataset.k]=v:delete S.memo[a.dataset.k];sv();cl();rc()},sk:a=>{S.skin=a.dataset.v;sv();ap();rs()},fn:a=>{S.font=a.dataset.v;sv();ap();rs()},an:a=>{S.an=S.an===0?1:0;sv();rs()},pt:a=>{S.pt=S.pt===0?1:0;sv();AT.sync();rs()},
+ chip:a=>{const t=$('#mt');t.value+=(t.value&&!/\s$/.test(t.value)?' ':'')+a.dataset.t},smm:a=>{const v=$('#mt').value.trim();v?S.memo[a.dataset.k]=v:delete S.memo[a.dataset.k];sv();cl();rc()},sk:a=>{S.skin=a.dataset.v;sv();ap();rs()},fn:a=>{S.font=a.dataset.v;sv();ap();rs()},an:a=>{S.an=S.an===0?1:0;sv();rs()},pt:a=>{S.pt=S.pt===0?1:0;sv();AT.sync();rs()},sn:a=>{S.sn=S.sn===0?1:0;sv();rs();if(S.sn!==0)AT.unlock()},
  exp:()=>dl('famcal-backup.json','application/json',JSON.stringify(S)),imp:()=>$('#fi').click(),
  inst:()=>window.dp&&window.dp.prompt(),
  ics:()=>{const mo=+$('#mo').value,L=['BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//FamCal//KO'],tr=trD(),st=new Date().toISOString().replace(/[-:]|\.\d+/g,''),s=x=>x.getFullYear()+P(x.getMonth()+1)+P(x.getDate())+'T'+P(x.getHours())+P(x.getMinutes())+'00';let id=0;
@@ -212,7 +217,7 @@ const EF='"Apple Color Emoji","Noto Color Emoji","Segoe UI Emoji",sans-serif';
 function em(c,e,x,y,size,flip,rot){c.save();c.translate(x,y);if(rot)c.rotate(rot);if(flip)c.scale(-1,1);c.font=size+'px '+EF;c.textAlign='center';c.textBaseline='bottom';c.fillText(e,0,0);c.restore()}
 const G={spring:['🐇','🐥','🐑','🦆','🐕','🐈'],summer:['🐕','🐸','🐢','🦀','🐈','🐿️'],autumn:['🐿️','🦊','🦌','🦔','🐻','🐈'],winter:['🐧','🦊','🐇','🐈','🦌','🐕']};
 const GN={spring:['🐇','🦔','🐈'],summer:['🐸','🦔','🐈'],autumn:['🦔','🦊','🐿️'],winter:['🦊','🐇','🐈']};
-const FL={m:['🐦','🕊️'],d:['🕊️','🐦','🦅'],n:['🦉','🦇']};
+const FL={m:['🐦','🕊️','🦜'],d:['🕊️','🐦','🦅','🦜','🦢'],n:['🦉','🦇']};
 const HOP=new Set(['🐇','🐸','🐥','🐿️']),SLOW=new Set(['🐢','🦔','🦀']);
 const SZ={'🦌':36,'🐻':34,'🐕':32,'🐑':32,'🐥':24,'🦔':24,'🐸':24,'🦀':24,'🐢':26,'🐧':30};
 function spawn(){const pool=(cs==='n'?GN:G)[cm].filter(e=>!an.some(a=>a.e===e));if(!pool.length)return;const e=pool[Math.random()*pool.length|0],d=Math.random()<.5?1:-1,sp=SLOW.has(e)?.25+Math.random()*.15:HOP.has(e)?.7+Math.random()*.4:.6+Math.random()*.5;an.push({e,dir:d,sp,x:d>0?-34:W+34,ph:Math.random()*6,pause:0})}
@@ -223,8 +228,24 @@ if(a.x<-40||a.x>W+40){an.splice(i,1);continue}
 const hop=HOP.has(a.e),lift=a.pause>0?0:Math.abs(Math.sin(a.ph))*(hop?11:2.5),sz=SZ[a.e]||30;
 b.fillStyle='rgba(0,0,0,.22)';b.beginPath();b.ellipse(a.x,gy-1,sz*.32*(1-lift/40),2.6,0,0,6.3);b.fill();
 em(b,a.e,a.x,gy-lift,sz,a.dir>0,a.pause>0?0:Math.sin(a.ph)*.05)}}
-function fliers(a,dt){if(!fl.length&&Math.random()<.004*dt){const d=Math.random()<.5?1:-1,L=FL[cs];fl.push({e:L[Math.random()*L.length|0],dir:d,x:d>0?-30:W+30,y:H*(.12+Math.random()*.22),sp:1+Math.random()*.7,ph:Math.random()*6})}
-for(let i=fl.length-1;i>=0;i--){const f=fl[i];f.x+=f.dir*f.sp*dt;f.ph+=.07*dt;if(f.x<-40||f.x>W+40){fl.splice(i,1);continue}em(a,f.e,f.x,f.y+Math.sin(f.ph)*14,26,f.dir>0,Math.sin(f.ph)*.12)}}
+let ac=null;
+const AC=()=>{if(!ac){try{ac=new(window.AudioContext||window.webkitAudioContext)()}catch(e){}}return ac};
+const unlock=()=>{const a=AC();if(a&&a.state!=='running')a.resume();setTimeout(()=>snd('🐦',W/2),200)};
+['click','touchend'].forEach(ev=>addEventListener(ev,()=>{if(S.sn!==0){const a=AC();if(a&&a.state==='suspended')a.resume()}},{passive:true}));
+function tone(f0,f1,t0,d,v,ty,pan){const a=ac,o=a.createOscillator(),g=a.createGain();o.type=ty||'sine';o.frequency.setValueAtTime(f0,t0);o.frequency.exponentialRampToValueAtTime(f1,t0+d);g.gain.setValueAtTime(.0001,t0);g.gain.exponentialRampToValueAtTime(v,t0+d*.25);g.gain.exponentialRampToValueAtTime(.0001,t0+d);o.connect(g);let out=g;if(a.createStereoPanner){const p=a.createStereoPanner();p.pan.value=pan;g.connect(p);out=p}out.connect(a.destination);o.start(t0);o.stop(t0+d+.03)}
+function snd(e,x){if(S.sn===0||!ac||ac.state!=='running')return;const t=ac.currentTime+.02,pan=Math.max(-1,Math.min(1,x/W*2-1));
+if(e==='🕊️'){for(let i=0;i<3;i++)tone(430,380,t+i*.42,.32,.05,'sine',pan)}
+else if(e==='🦉'){tone(330,290,t,.4,.06,'sine',pan);tone(330,290,t+.7,.25,.05,'sine',pan);tone(330,270,t+1.05,.45,.05,'sine',pan)}
+else if(e==='🦅'){tone(3200,1800,t,.4,.03,'triangle',pan)}
+else if(e==='🦜'){tone(1500,2300,t,.14,.04,'triangle',pan);tone(2300,1700,t+.2,.16,.04,'triangle',pan)}
+else if(e==='🦢'){tone(520,640,t,.3,.04,'triangle',pan);tone(640,520,t+.35,.3,.04,'triangle',pan)}
+else{const n=2+Math.random()*3|0,b=2600+Math.random()*1500;for(let i=0;i<n;i++){const t0=t+i*(.1+Math.random()*.06),up=Math.random()<.6;tone(up?b:b*1.4,up?b*1.45:b*.8,t0,.08,.045,'sine',pan)}}}
+function fliers(a,dt,t){if(fl.length<3&&Math.random()<.0025*dt){const d=Math.random()<.5?1:-1,L=FL[cs],fk=cs!=='n'&&Math.random()<.4;fl.push({k:fk,e:L[Math.random()*L.length|0],dir:d,x:d>0?-60:W+60,y:H*(.09+Math.random()*.26),sp:(fk?1.3:1)+Math.random()*.7,ph:Math.random()*6,n:3+(Math.random()*5|0),z:.8+Math.random()*.5,ck:t+400+Math.random()*900})}
+for(let i=fl.length-1;i>=0;i--){const f=fl[i];f.x+=f.dir*f.sp*dt;f.ph+=(f.k?.22:.07)*dt;if(f.x<-80||f.x>W+80){fl.splice(i,1);continue}
+if(t>f.ck&&f.x>0&&f.x<W){snd(f.k?'🐦':f.e,f.x);f.ck=t+1500+Math.random()*2500}
+if(f.k){const z=f.z;a.strokeStyle=cs==='m'?'#2a1538':'#fff';a.lineWidth=1.7*z;a.lineCap='round';a.shadowColor=cs==='d'?'rgba(0,70,140,.5)':'transparent';a.shadowBlur=3;
+for(let j=0;j<f.n;j++){const k=(j+1)>>1,sg=j%2?1:-1,bx=f.x-f.dir*k*15*z,by=f.y+(j?sg*k*8*z:0)+Math.sin(f.ph*.3)*4,fw=Math.sin(f.ph+k*.35);a.beginPath();a.moveTo(bx-8*z,by+fw*5*z);a.quadraticCurveTo(bx-4*z,by-3*z-fw*3*z,bx,by);a.quadraticCurveTo(bx+4*z,by-3*z-fw*3*z,bx+8*z,by+fw*5*z);a.stroke()}a.shadowBlur=0}
+else em(a,f.e,f.x,f.y+Math.sin(f.ph)*14,28,f.dir>0,Math.sin(f.ph)*.12)}}
 function drawStars(a,t){if(!stars)stars=Array.from({length:Math.round(W*H/2600)},()=>({x:Math.random()*W,y:Math.random()*H*.62,r:Math.random()*1.2+.3,p:Math.random()*6}));
 for(const q of stars){const al=.45+.55*Math.sin(t/700+q.p);a.fillStyle=`rgba(255,250,235,${al})`;a.beginPath();a.arc(q.x,q.y,q.r,0,6.3);a.fill();if(q.r>1.25){a.strokeStyle=`rgba(255,250,235,${al*.6})`;a.lineWidth=.7;a.beginPath();a.moveTo(q.x-5,q.y);a.lineTo(q.x+5,q.y);a.moveTo(q.x,q.y-5);a.lineTo(q.x,q.y+5);a.stroke()}}
 if(!sh&&Math.random()<.004)sh={x:W*.3+Math.random()*W*.6,y:Math.random()*H*.2,l:0};
@@ -233,7 +254,7 @@ function frame(t){raf=0;if(!on||document.hidden)return;const dt=Math.min(3,(t-la
 const a=bk.getContext('2d'),b=fy.getContext('2d');a.clearRect(0,0,W,H);b.clearRect(0,0,W,H);
 if(cs==='n')drawStars(a,t);
 if(S.pt!==0){if(!parts)mkParts();for(const p of parts){a.save();draw(a,p,W,H,t);a.restore()}}
-if(S.an!==0){fliers(a,dt);ground(b,dt)}
+if(S.an!==0){fliers(a,dt,t);ground(b,dt)}
 if(!rm)raf=requestAnimationFrame(frame)}
 const start=()=>{if(on&&!raf)raf=requestAnimationFrame(frame)};
 function size(){const d=Math.min(devicePixelRatio||1,2);W=innerWidth;H=innerHeight;[bk,fy].forEach(c=>{c.width=W*d;c.height=H*d;c.style.width=W+'px';c.style.height=H+'px';c.getContext('2d').setTransform(d,0,0,d,0,0)});NH=nav?nav.offsetHeight:60;stars=null;parts=null}
@@ -248,7 +269,7 @@ function sync(){on=S.skin==='auto';if(on){size();apply();start()}else clear()}
 addEventListener('resize',()=>{if(on)size()});
 document.addEventListener('visibilitychange',()=>{if(!document.hidden&&on){if(slot()!==cs||seas()!==cm)apply();start()}});
 setInterval(()=>{if(on&&(slot()!==cs||seas()!==cm))apply()},60000);
-window.AT={sync,label:()=>SN[seas()]+' · '+TN[slot()]};
+window.AT={sync,unlock,label:()=>SN[seas()]+' · '+TN[slot()]};
 })();
 ap();rc();
 const bf=new Intl.DateTimeFormat('en-CA',{timeZone:'Asia/Seoul',year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit',hourCycle:'h23'});let BT='';
