@@ -148,6 +148,7 @@ $$('nav button').forEach(b=>b.onclick=()=>{const v=b.dataset.v;$$('nav button').
 $('#pv').onclick=()=>{cm--;if(cm<0){cm=11;cy--}rc()};$('#nx').onclick=()=>{cm++;if(cm>11){cm=0;cy++}rc()};$('#tdy').onclick=()=>{cy=new Date().getFullYear();cm=new Date().getMonth();rc()};
 addEventListener('beforeinstallprompt',e=>{e.preventDefault();window.dp=e;const b=$('#inst');if(b)b.hidden=false});
 if('serviceWorker'in navigator)navigator.serviceWorker.register('sw.js');
+let tx,ty;const mn=$('main');mn.addEventListener('touchstart',e=>{tx=e.touches[0].clientX;ty=e.touches[0].clientY},{passive:true});mn.addEventListener('touchend',e=>{if($('#v-cal').hidden||$('#sh').classList.contains('on'))return;const t=e.changedTouches[0],dx=t.clientX-tx,dy=t.clientY-ty;if(Math.abs(dx)>50&&Math.abs(dx)>Math.abs(dy)*1.5)$(dx<0?'#nx':'#pv').click()},{passive:true});
 ap();rc();
 const bf=new Intl.DateTimeFormat('en-CA',{timeZone:'Asia/Seoul',year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit',hourCycle:'h23'});let BT='';
 (async()=>{let t;try{t=(await fetch(location.href.split('#')[0],{method:'HEAD',cache:'no-store'})).headers.get('last-modified')}catch(e){}const p={};bf.formatToParts(new Date(t||document.lastModified)).forEach(x=>p[x.type]=x.value);BT='빌드 '+p.year+p.month+p.day+'.'+p.hour+p.minute+' ('+p.year+'.'+p.month+'.'+p.day+' '+p.hour+':'+p.minute+')';$('#bn').textContent=BT;const e=$('#bn2');if(e)e.textContent=BT})();
