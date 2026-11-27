@@ -114,6 +114,30 @@ html body .gr .cell{position:relative;height:78px;min-height:0;overflow:visible}
 html body .gr .tg{position:absolute;top:3px;left:1px;flex-direction:column;gap:2px;height:auto;margin:0}
 html body .gr .tg i{width:12px;height:12px;font-size:9px;line-height:12px;border-radius:4px;transform:none}
 html body .gr .mm{position:absolute;bottom:2px;left:0;right:0;margin:0}
+html body .gr{grid-auto-rows:var(--rh,78px)}
+html body .gr .cell{height:var(--rh,78px)}
+html body .gr[data-s=m] .bd{width:26px;height:26px}
+html body .gr[data-s=s] .bd{width:22px;height:22px}
+html body .gr[data-s=m] .bd.D,html body .gr[data-s=m] .bd.N{font-size:14px}
+html body .gr[data-s=s] .bd.D,html body .gr[data-s=s] .bd.N{font-size:12px;border-width:1.5px}
+html body .gr[data-s=s] .dn{font-size:13px}
+html body .gr .cell.t{box-shadow:0 0 0 2px #fff,0 0 0 4px rgba(30,45,110,.45),0 0 16px 5px rgba(255,255,255,.6),0 6px 0 rgba(0,0,0,.25)}
+html body .gr .cell.t .dn{background:#fff;color:#1b2a6b!important;border-radius:99px;padding:0 8px;text-shadow:none;font-weight:800}
+html body .gr .bd.D,html body .gr .bd.N{font-size:0!important;color:transparent!important}
+html body .bd.D{background:radial-gradient(circle at 32% 26%,rgba(255,255,255,.8) 0,rgba(255,255,255,0) 42%),linear-gradient(145deg,#6cc4ff,#1f6fe0);box-shadow:0 3px 0 #0e3f8f,0 0 14px rgba(70,160,255,.9),0 7px 10px rgba(0,0,0,.35)}
+html body .bd.N{background:radial-gradient(circle at 32% 26%,rgba(255,255,255,.75) 0,rgba(255,255,255,0) 42%),linear-gradient(145deg,#ff7a85,#d81f3a);box-shadow:0 3px 0 #7d0f22,0 0 14px rgba(255,80,95,.9),0 7px 10px rgba(0,0,0,.4)}
+html body .gr .cell.sD{background:linear-gradient(160deg,rgba(70,160,255,.5),rgba(30,100,220,.22));border-color:rgba(150,205,255,.85)}
+html body .gr .cell.sN{background:linear-gradient(160deg,rgba(255,90,105,.5),rgba(190,30,55,.26));border-color:rgba(255,160,170,.85)}
+html body .gr .bd{display:none}
+html body .gr .cell.sD,html body .gr .cell.sN{background:linear-gradient(160deg,rgba(10,35,100,.34),rgba(10,35,100,.16));border-color:rgba(255,255,255,.3)}
+html body .gr .dn{height:28px;min-width:28px;display:grid;place-items:center;margin:3px 0 1px;padding:0;font-size:15px;font-weight:700}
+html body .gr .cell.sD .dn,html body .gr .cell.sN .dn{width:28px;border-radius:50%;color:#fff!important;font-weight:800;text-shadow:none;border:2px solid rgba(255,255,255,.92)}
+html body .gr .cell.sD .dn{background:radial-gradient(circle at 32% 26%,rgba(255,255,255,.55) 0,rgba(255,255,255,0) 45%),linear-gradient(145deg,#6cc4ff,#1f6fe0);box-shadow:0 3px 0 #0e3f8f,0 0 12px rgba(70,160,255,.85)}
+html body .gr .cell.sN .dn{background:radial-gradient(circle at 32% 26%,rgba(255,255,255,.55) 0,rgba(255,255,255,0) 45%),linear-gradient(145deg,#ff7a85,#d81f3a);box-shadow:0 3px 0 #7d0f22,0 0 12px rgba(255,80,95,.85)}
+html body .gr .cell.t:not(.sD):not(.sN) .dn{height:24px;padding:0 9px;margin:5px 0 3px}
+html body .gr .tg{top:0;left:0;right:0;bottom:0;display:block;pointer-events:none}
+html body .gr .tg i{position:absolute;top:2px;width:12px;height:12px;font-size:9px;line-height:12px}
+html body .gr .tg i:nth-child(1){left:1px}html body .gr .tg i:nth-child(2){right:1px}
 </style></head><body>
 <svg width="0" height="0" style="position:absolute"><defs>
 <symbol id="i-cal"><rect x="3" y="4.5" width="18" height="17" rx="3"/><path d="M16 2.5v4M8 2.5v4M3 10h18"/></symbol>
@@ -127,7 +151,7 @@ html body .gr .mm{position:absolute;bottom:2px;left:0;right:0;margin:0}
 <header><p class="mu" id="bn"></p><div><button class="ar" id="pv">‹</button><h1 id="ym"></h1><button class="ar" id="nx">›</button></div><button class="pill" id="tdy">오늘</button></header>
 <main>
 <section id="v-cal"><div class="wk"><div style="color:var(--r)">일</div><div>월</div><div>화</div><div>수</div><div>목</div><div>금</div><div style="color:var(--b)">토</div></div><div class="gr" id="gr"></div>
-<div class="lg"><span><i style="background:var(--g)"></i>데이</span><span><i style="background:#5257cf"></i>나이트</span><span><i style="background:#ff9ec4"></i>생=생일</span><span><i style="background:#7fb7ff"></i>교=교육</span></div></section>
+<div class="lg"><span><i style="background:#3d9bff"></i>데이</span><span><i style="background:#ff4a5e"></i>나이트</span><span><i style="background:#ff9ec4"></i>생=생일</span><span><i style="background:#7fb7ff"></i>교=교육</span></div></section>
 <section id="v-bd" hidden></section><section id="v-set" hidden></section>
 </main>
 <button class="cx" id="cx" aria-label="닫기">✕</button><p id="hint">아래 메뉴를 누르면 다시 열려요</p><nav><button data-v="cal" class="on"><svg class="ic" viewBox="0 0 24 24"><use href="#i-cal"/></svg>달력</button><button data-v="bd"><svg class="ic" viewBox="0 0 24 24"><use href="#i-gift"/></svg>생일</button><button data-v="set"><svg class="ic" viewBox="0 0 24 24"><use href="#i-bell"/></svg>알람·설정</button></nav>
@@ -154,14 +178,14 @@ let cy=new Date().getFullYear(),cm=new Date().getMonth();
 function rc(){$('#ym').textContent=cy+'년 '+(cm+1)+'월';window.AT&&AT.month&&AT.month(cm+1);
  const f=D0(cy,cm,1),st=D0(cy,cm,1-f.getDay()),n=Math.ceil((f.getDay()+new Date(cy,cm+1,0).getDate())/7)*7,tr=trD(),tk=td();let h='';
  for(let i=0;i<n;i++){const d=D0(st.getFullYear(),st.getMonth(),st.getDate()+i),k=K(d),w=d.getDay(),ho=hol(d),s=sh(d),[lm,ld,ll]=lun(d);
-  h+=`<div class="cell${s=='.'?'':' s'+s}${d.getMonth()!=cm?' o':''}${k==tk?' t':''}" data-k="${k}"><span class="dn" style="color:${ho||w==0?'var(--r)':w==6?'var(--b)':'inherit'}">${d.getDate()}</span><span class="lu">${ho?`<em>${ho.slice(0,4)}</em>`:!ll&&(ld==1||ld==15)?lm+'.'+ld:''}</span><span class="bd ${s=='.'?'':s}">${s=='.'?'':s}</span><span class="tg">${bdOn(d).length?'<i style="background:#ff9ec4">생</i>':''}${tr[k]?'<i style="background:#7fb7ff">교</i>':''}</span><span class="mm">${E((S.memo[k]||'').split('\n')[0])}</span></div>`}
- $('#gr').innerHTML=h;$$('.cell').forEach(e=>e.onclick=()=>det(e.dataset.k))}
+  h+=`<div class="cell${s=='.'?'':' s'+s}${d.getMonth()!=cm?' o':''}${k==tk?' t':''}" data-k="${k}"><span class="dn" style="color:${ho||w==0?'var(--r)':w==6?'var(--b)':'inherit'}">${d.getDate()}</span><span class="lu">${ho?`<em>${ho.slice(0,4)}</em>`:!ll&&s=='.'&&(ld==1||ld==15)?lm+'.'+ld:''}</span><span class="bd ${s=='.'?'':s}">${s=='.'?'':s}</span><span class="tg">${bdOn(d).length?'<i style="background:#ff9ec4">생</i>':''}${tr[k]?'<i style="background:#7fb7ff">교</i>':''}</span><span class="mm">${E((S.memo[k]||'').split('\n')[0])}</span></div>`}
+ $('#gr').innerHTML=h;$$('.cell').forEach(e=>e.onclick=()=>det(e.dataset.k));fit()}
 const sheet=h=>{$('#sb').innerHTML='<button class="sx" data-a="cls" aria-label="닫기">✕</button>'+h;$('#sh').classList.add('on')},cl=()=>$('#sh').classList.remove('on');
 $('#sh').onclick=e=>{if(e.target.id=='sh')cl()};
 function det(k){const d=new Date(k+'T12:00'),s=sh(d),[lm,ld,ll]=lun(d),ho=hol(d),tr=trD()[k];
  const row=(i,c,t,u)=>`<div class="card"><span style="color:${c}">${I(i)}</span><div><b>${t}</b><div class="mu">${u||''}</div></div></div>`;
  let h=`<h2>${d.getMonth()+1}월 ${d.getDate()}일 ${WD[d.getDay()]}요일</h2><p class="mu">${d.getFullYear()}년, 음력 ${ll?'윤':''}${lm}월 ${ld}일${ho?', '+ho:''}</p>`;
- h+=s=='D'?row('sun','var(--g2)','데이 근무','기상 알람 당일 오전 6:10'):s=='N'?row('moon','#a3a8ff','나이트 근무','기상 알람 전날 오후 4:10'):row('cal','var(--m)','휴무');
+ h+=s=='D'?row('sun','#6cc4ff','데이 근무','기상 알람 당일 오전 6:10'):s=='N'?row('moon','#ff8a96','나이트 근무','기상 알람 전날 오후 4:10'):row('cal','var(--m)','휴무');
  if(tr)h+=row('cap','#7fb7ff','사내교육','오후 4시까지 출근 (다음 나이트 전날)');
  bdOn(d).forEach(p=>h+=row('gift','#ff9ec4',E(p.n)+' 생일',(p.l?'음력 ':'양력 ')+p.m+'월 '+p.d+'일'));
  h+=`<textarea id="mt" placeholder="메모 (예: 유리막 코팅, 광택)">${E(S.memo[k]||'')}</textarea><div class="ch">${['유리막','광택','세차','엔진오일','교육'].map(t=>`<button data-a="chip" data-t="${t}">${t}</button>`).join('')}</div><button class="btn" data-a="smm" data-k="${k}">메모 저장</button>`;sheet(h)}
@@ -362,4 +386,6 @@ addEventListener('deviceorientation',e=>{if(e.beta==null)return;if(bx===null){bx
 addEventListener('pointermove',e=>{if(e.pointerType=='mouse')set((e.clientY/innerHeight-.5)*-10,(e.clientX/innerWidth-.5)*14)})})();
 const bf=new Intl.DateTimeFormat('en-CA',{timeZone:'Asia/Seoul',year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit',hourCycle:'h23'});let BT='';
 (async()=>{let t;try{t=(await fetch(location.href.split('#')[0],{method:'HEAD',cache:'no-store'})).headers.get('last-modified')}catch(e){}const p={};bf.formatToParts(new Date(t||document.lastModified)).forEach(x=>p[x.type]=x.value);BT='빌드 '+p.year+p.month+p.day+'.'+p.hour+p.minute+' ('+p.year+'.'+p.month+'.'+p.day+' '+p.hour+':'+p.minute+')';$('#bn').textContent=BT;const e=$('#bn2');if(e)e.textContent=BT})();
+function fit(){const g=$('#gr'),mn=$('main'),n=$('nav');if(!g||$('#v-cal').hidden)return;delete g.dataset.s;const rows=g.children.length/7,top=g.getBoundingClientRect().top+mn.scrollTop,avail=n.getBoundingClientRect().top-top-76-4*(rows-1)-16,rh=Math.max(50,Math.min(66,Math.floor(avail/rows)));g.style.setProperty('--rh',rh+'px');if(rh<70)g.dataset.s=rh<60?'s':'m'}
+addEventListener('resize',fit);setTimeout(fit,400);document.fonts&&document.fonts.ready.then(fit);
 </script></body></html>
