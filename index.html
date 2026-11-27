@@ -98,6 +98,16 @@ html body .gr .cell.t{transform:translateZ(28px);background:linear-gradient(180d
 nav button.on{transform:translateY(-2px);box-shadow:0 3px 0 rgba(0,0,0,.3),inset 0 1px 0 rgba(255,255,255,.2)}
 @media (prefers-reduced-motion:reduce){html body .gr{transform:none}}
 main{padding-bottom:calc(150px + env(safe-area-inset-bottom))}#v-cal .lg{margin-top:22px;position:relative;z-index:1}
+
+html body .gr{gap:4px;padding:6px 5px 10px;transform:rotateX(var(--rx,5deg)) rotateY(var(--ry,0deg))}
+html body .gr .cell{min-height:66px;padding:4px 1px 3px;border-color:rgba(255,255,255,.3);background:linear-gradient(160deg,rgba(10,35,100,.34),rgba(10,35,100,.16))}
+html body .gr .cell.sD{background:linear-gradient(160deg,rgba(255,214,90,.55),rgba(255,160,20,.22));border-color:rgba(255,226,130,.85)}
+html body .gr .cell.sN{background:linear-gradient(160deg,rgba(80,92,240,.62),rgba(22,28,120,.5));border-color:rgba(160,172,255,.85)}
+.dn{font-size:14px;font-weight:700}.lu{height:11px}.tg:empty,.mm:empty{display:none}.bd{width:30px;height:30px}
+html body .bd.D,html body .bd.N{border:2px solid rgba(255,255,255,.92);font:800 16px Georgia,serif}
+html body .bd.D{background:radial-gradient(circle at 32% 26%,#fffbe0 0,rgba(255,255,255,0) 42%),linear-gradient(145deg,#ffd93b,#f08a00);color:#3a1d00;text-shadow:none;box-shadow:0 3px 0 #9a5a00,0 0 14px rgba(255,200,40,.9),0 7px 10px rgba(0,0,0,.35)}
+html body .bd.N{background:radial-gradient(circle at 32% 26%,rgba(255,255,255,.6) 0,rgba(255,255,255,0) 42%),linear-gradient(145deg,#5a6bff,#1b1fa8);color:#fff;text-shadow:none;box-shadow:0 3px 0 #0b0e5c,0 0 14px rgba(110,125,255,.95),0 7px 10px rgba(0,0,0,.4)}
+main{padding-bottom:calc(110px + env(safe-area-inset-bottom))}
 </style></head><body>
 <svg width="0" height="0" style="position:absolute"><defs>
 <symbol id="i-cal"><rect x="3" y="4.5" width="18" height="17" rx="3"/><path d="M16 2.5v4M8 2.5v4M3 10h18"/></symbol>
@@ -138,7 +148,7 @@ let cy=new Date().getFullYear(),cm=new Date().getMonth();
 function rc(){$('#ym').textContent=cy+'년 '+(cm+1)+'월';window.AT&&AT.month&&AT.month(cm+1);
  const f=D0(cy,cm,1),st=D0(cy,cm,1-f.getDay()),n=Math.ceil((f.getDay()+new Date(cy,cm+1,0).getDate())/7)*7,tr=trD(),tk=td();let h='';
  for(let i=0;i<n;i++){const d=D0(st.getFullYear(),st.getMonth(),st.getDate()+i),k=K(d),w=d.getDay(),ho=hol(d),s=sh(d),[lm,ld,ll]=lun(d);
-  h+=`<div class="cell${d.getMonth()!=cm?' o':''}${k==tk?' t':''}" data-k="${k}"><span class="dn" style="color:${ho||w==0?'var(--r)':w==6?'var(--b)':'inherit'}">${d.getDate()}</span><span class="lu">${ho?`<em>${ho.slice(0,4)}</em>`:!ll&&(ld==1||ld==15)?lm+'.'+ld:''}</span><span class="bd ${s=='.'?'':s}">${s=='.'?'':s}</span><span class="tg">${bdOn(d).length?'<i style="background:#ff9ec4">생</i>':''}${tr[k]?'<i style="background:#7fb7ff">교</i>':''}</span><span class="mm">${E((S.memo[k]||'').split('\n')[0])}</span></div>`}
+  h+=`<div class="cell${s=='.'?'':' s'+s}${d.getMonth()!=cm?' o':''}${k==tk?' t':''}" data-k="${k}"><span class="dn" style="color:${ho||w==0?'var(--r)':w==6?'var(--b)':'inherit'}">${d.getDate()}</span><span class="lu">${ho?`<em>${ho.slice(0,4)}</em>`:!ll&&(ld==1||ld==15)?lm+'.'+ld:''}</span><span class="bd ${s=='.'?'':s}">${s=='.'?'':s}</span><span class="tg">${bdOn(d).length?'<i style="background:#ff9ec4">생</i>':''}${tr[k]?'<i style="background:#7fb7ff">교</i>':''}</span><span class="mm">${E((S.memo[k]||'').split('\n')[0])}</span></div>`}
  $('#gr').innerHTML=h;$$('.cell').forEach(e=>e.onclick=()=>det(e.dataset.k))}
 const sheet=h=>{$('#sb').innerHTML='<button class="sx" data-a="cls" aria-label="닫기">✕</button>'+h;$('#sh').classList.add('on')},cl=()=>$('#sh').classList.remove('on');
 $('#sh').onclick=e=>{if(e.target.id=='sh')cl()};
