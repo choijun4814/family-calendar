@@ -333,11 +333,12 @@ const AC={
   L.push('END:VCALENDAR');dl('shift-alarm.ics','text/calendar',L.join('\r\n'))}};
 document.addEventListener('click',e=>{const a=e.target.closest('[data-a]');if(a&&AC[a.dataset.a])AC[a.dataset.a](a)});
 $('#fi').onchange=e=>{const r=new FileReader();r.onload=()=>{try{S=JSON.parse(r.result);sv();location.reload()}catch(x){alert('백업 파일을 읽지 못했어요')}};r.readAsText(e.target.files[0])};
+const fixGr=()=>{const e=$('#gr');if(e){e.style.removeProperty('transform');e.style.opacity='';e.style.transition='';e.style.willChange=''}};addEventListener('pageshow',fixGr);document.addEventListener('visibilitychange',()=>{if(!document.hidden)fixGr()});
 $('#cx').onclick=()=>{document.body.classList.add('sc');$$('nav button').forEach(x=>x.classList.remove('on'))};
 document.addEventListener('input',e=>{if(e.target.id=='vol'){S.vol=+e.target.value;sv();const q=$('#vp');if(q)q.textContent=S.vol+'%';window.AT&&AT.vol()}});
 document.addEventListener('change',e=>{if(e.target.id=='vol'&&S.sn!==0)AT.unlock();if(e.target.id=='trp'){S.trp=+e.target.value;sv();rc();rs()}});
 const R={cal:rc,bd:rb,car:rcar,set:rs};
-$$('nav button').forEach(b=>b.onclick=()=>{const v=b.dataset.v;document.body.classList.remove('sc');$('main').classList.toggle('pad',v!='cal');$$('nav button').forEach(x=>x.classList.toggle('on',x==b));['cal','bd','set'].forEach(x=>$('#v-'+x).hidden=x!=v);$('header').hidden=v!='cal';R[v]()});
+$$('nav button').forEach(b=>b.onclick=()=>{const v=b.dataset.v;document.body.classList.remove('sc');fixGr();$('main').classList.toggle('pad',v!='cal');$$('nav button').forEach(x=>x.classList.toggle('on',x==b));['cal','bd','set'].forEach(x=>$('#v-'+x).hidden=x!=v);$('header').hidden=v!='cal';R[v]()});
 $('#pv').onclick=()=>{cm--;if(cm<0){cm=11;cy--}rc()};$('#nx').onclick=()=>{cm++;if(cm>11){cm=0;cy++}rc()};$('#tdy').onclick=()=>{cy=new Date().getFullYear();cm=new Date().getMonth();rc()};
 addEventListener('beforeinstallprompt',e=>{e.preventDefault();window.dp=e;const b=$('#inst');if(b)b.hidden=false});
 if('serviceWorker'in navigator)navigator.serviceWorker.register('sw.js');
