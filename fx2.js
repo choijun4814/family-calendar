@@ -57,7 +57,7 @@ const TH=[
 (n,w,k,r)=>{hill('#ffffff','#e4eef9',10*k,4*k,1);el(W/2,gy+16,W*.42,18*k,'rgba(190,230,255,.9)');snm(W*.2,gy+2,12*k);snm(W*.8,gy+2,14*k);for(let i=0;i<3;i++)pine(W*(.05+i*.45),gy,46*k,1,M.sin(n/1100+i)*w)}]];
 function ok(){try{return S.sa!==0&&document.documentElement.dataset.skin==='scenic'&&!document.hidden&&window.WX&&WX.q.mo}catch(e){return false}}
 function frame(now){requestAnimationFrame(frame);if(++fc&1)return;if(!ok()){if(cv)g.clearRect(0,0,W,H);return}if(!cv&&!mk())return;if(fc%30===2)gnd();const q=WX.q,mo=q.mo,se=mo>=3&&mo<=5?0:mo>=6&&mo<=8?1:mo>=9&&mo<=11?2:3,t=now+off0,ph=t%9e4,ti=(t/9e4|0)%3,a=M.min(1,ph/2500,(9e4-ph)/2500);
-g.clearRect(0,0,W,H);g.save();g.globalAlpha=a;TH[se*3+ti](now,q.w*2+.3,K(),sr(se*7+ti*13+1));
+g.clearRect(0,0,W,H);g.save();g.globalAlpha=a;TH[se][ti](now,q.w*2+.3,K(),sr(se*7+ti*13+1));
 let nt=false;try{nt=!!SCN.D[mo].st}catch(e){}if(nt){g.globalCompositeOperation='source-atop';g.fillStyle='rgba(10,16,44,.5)';g.fillRect(0,0,W,H)}g.restore()}
 requestAnimationFrame(frame);
 })();

@@ -221,8 +221,8 @@ html body .gr .cell.t::before{content:"";position:absolute;inset:-6px;border-rad
 html,body{touch-action:pan-x pan-y;-webkit-text-size-adjust:100%}
 #scn{position:fixed;inset:0;z-index:-1;overflow:hidden;pointer-events:none;display:none;background:#0c1020}html[data-skin=scenic] #scn{display:block}
 #scn:after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.24),rgba(0,0,0,0) 38%,rgba(0,0,0,.06) 62%,rgba(0,0,0,.3))}
-.sc{position:absolute;inset:0;opacity:0;transition:opacity 1.4s}.sc.on{opacity:1}.sc svg{width:100%;height:100%;display:block}
-.sc:not(.on) *{animation-play-state:paused!important}
+#scn .sc{position:absolute;inset:0;opacity:0;transition:opacity 1.4s}#scn .sc.on{opacity:1}.sc svg{width:100%;height:100%;display:block}
+#scn .sc:not(.on) *{animation-play-state:paused!important}
 .pt{position:absolute;inset:0;overflow:hidden}.pt span{position:absolute;top:-30px;animation:ptf linear infinite;filter:drop-shadow(0 1px 2px rgba(0,0,0,.25))}
 @keyframes ptf{0%{transform:translate(0,-5vh) rotate(0)}50%{transform:translate(28px,52vh) rotate(180deg)}100%{transform:translate(-12px,108vh) rotate(360deg)}}
 @keyframes tw{0%,100%{opacity:.25}50%{opacity:1}}@keyframes shm{0%,100%{opacity:.4}50%{opacity:1}}
