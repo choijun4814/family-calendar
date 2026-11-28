@@ -52,7 +52,6 @@ A('winter','frostSparkle','서리 반짝','✨',[11,12,1,2,3],'flow',{s:['#star:
 A('winter','breath','하얀 입김','🌬️',[11,12,1,2,3],'flow',{s:['#puff'],f:'any',y:[.62,.9],n:16,z:[18,34],vx:[.2,.6],vy:[-.5,-.2],lf:[1.5,3],al:.45});
 A('winter','snowman','눈사람 등장','⛄',[12,1,2],'stand',{s:['⛄'],n:2,z:[44,60],xs:[{k:'flow',s:['#snow'],n:40,z:[4,8],vy:[1,2],vx:[0,.4],sw:.4,al:.8}]});
 A('winter','santa','산타 썰매','🎅',[12],'cross',{ch:['🦌','🦌','🛷'],gp:34,v:[2.4,3.2],y:[.1,.3],z:[34,42],ev:9,bob:8,bf:.05,tr:[255,240,160,110],dy:0});
-A('winter','snowball','눈싸움 눈덩이','⚪',[12,1,2],'lob',{s:['#snow'],y:[.72,.82],dx:[120,240],hh:[60,110],T:[40,55],z:[14,18],ev:.7});
 A('winter','skier','스키 활강','⛷',[12,1,2],'cross',{s:['⛷'],y:[.2,.4],sl:.35,v:[2.5,3.5],z:[28,34],ev:4,dy:1});
 A('winter','snowboard','스노보드 질주','🏂',[12,1,2],'cross',{s:['🏂'],y:[.22,.42],sl:.3,v:[2.6,3.6],z:[28,34],ev:4,dy:1});
 A('winter','sled','썰매 질주','🛷',[12,1,2],'cross',{s:['🛷'],g:6,v:[2.5,3.5],z:[30,38],ev:5});
@@ -68,8 +67,6 @@ A('summer','glitter','물결 윤슬','✨',[5,6,7,8,9],'flow',{s:['#star:#ffffff
 A('summer','dolphin','돌고래 점프','🐬',SU,'lob',{s:['🐬'],y:[.66,.74],dx:[140,220],hh:[70,110],T:[55,75],z:[34,44],ev:3.5,rt:'tan',rp:1,dy:1});
 A('summer','whale','고래 유영','🐋',SU,'cross',{s:['🐋'],y:[.58,.66],v:[.4,.7],z:[64,86],bob:5,bf:.03,ev:20,dy:1});
 A('summer','seagull','갈매기 떼','🕊',[5,6,7,8,9],'cross',{s:['@bird:#ffffff'],gn:5,gp:24,v:[1.1,1.8],y:[.1,.35],z:[9,13],ev:6,bob:6,bf:.03,fl:.25,dy:1});
-A('summer','waterBalloon','물풍선 싸움','💦',[7,8],'lob',{s:['#drop'],y:[.75,.85],dx:[160,260],hh:[90,140],T:[45,60],z:[16,22],ev:.8,rp:1,dy:1});
-A('summer','beachBall','비치볼 통통','🏐',[6,7,8],'lob',{s:['🏐'],g:0,dx:[180,260],hh:[90,130],T:[60,80],z:[22,28],ev:2.5,spn:.15,dy:1});
 A('summer','doubleRainbow','쌍무지개','🌈',[4,5,6,7,8,9],'rainbow',{n:2,al:.6,wet:1,dy:1});
 A('summer','shower','소나기 퍼붓기','🌧',[6,7,8,9],'flow',{n:260,f:'t',z:[1,1],s:['#snow'],vx:[3,5],vy:[18,26],ln:['210,225,255',16,1.3],al:.55,wet:1,sw:0,dm:.2});
 A('summer','glare','한여름 쨍한 햇빛','☀️',SU,'tint',{dy:1,st:[[0,'255,255,255',.16],[1,'255,250,210',.24]],xs:[{k:'flare'}]});
@@ -272,7 +269,7 @@ H_.cross={i(c){c.gs=[];c.nx=0},u(c,I,now,dt,en){const o=c.o,GS=c.gs,al=M.min(1,e
   if(!I.end&&I.t>=c.nx){c.nx=I.t+(o.ev||4)*rr(.8,1.25);const dir=dirOf(o),z=R2(o.z)*K,items=o.ch||Array.from({length:o.gn||1},()=>pick(o.s)),gp=(o.gp||24)*K,sp=items.length*gp+z+60*K,y=o.g!==undefined?gy+o.g*K-z*.42:R2(o.y)*H;GS.push({x:dir>0?-sp:W+sp,y,v:R2(o.v)*dir,dir,z,items,gp,a:0,ph:rn()*6,sl:o.sl||0})}
   for(let i=GS.length-1;i>=0;i--){const G=GS[i];G.a+=dt;G.x+=G.v*dt;G.y+=M.abs(G.v)*G.sl*dt;const sp=G.items.length*G.gp+G.z+60*K;if(G.dir>0?G.x-sp>W:G.x+sp<0){GS.splice(i,1);continue}
    const by=G.y+(o.bob?M.sin(G.a*(o.bf||.04)+G.ph)*o.bob*K:0),fl=o.fr?G.dir<0:G.dir>0;
-   G.items.forEach((k,j)=>{const kk=o.vf?(j+1)>>1:j;let ox_=-G.dir*kk*G.gp,oy_=o.vf?(j%2?1:-1)*kk*G.gp*.55:0;if(o.hop)oy_-=M.abs(M.sin(G.a*(o.hf||.18)+j*1.3))*o.hop*K;if(o.zz)oy_+=M.sin(G.a*.12+j*2+G.ph)*o.zz*K;const x=G.x+ox_,y=by+oy_;
+   G.items.forEach((k,j)=>{const kk=o.vf?(j+1)>>1:j;let ox_=-G.dir*kk*G.gp,oy_=o.vf?(j%2?1:-1)*kk*G.gp*.55:0;if(o.hop){const u=((G.a*(o.hf||.18)+j*1.3)/M.PI)%1;if(u<.55)oy_-=M.sin(u/.55*M.PI)*o.hop*K*(o.hop>=9?1:.3)}if(o.zz)oy_+=M.sin(G.a*.12+j*2+G.ph)*o.zz*K;const x=G.x+ox_,y=by+oy_;
     if(o.tr&&j===0){const Ln=o.tr[3]*K,vx=G.v,vy=M.abs(G.v)*G.sl,n=M.hypot(vx,vy)||1,gr=g.createLinearGradient(x,y,x-vx/n*Ln,y-vy/n*Ln);gr.addColorStop(0,`rgba(${o.tr[0]},${o.tr[1]},${o.tr[2]},${.7*al})`);gr.addColorStop(1,`rgba(${o.tr[0]},${o.tr[1]},${o.tr[2]},0)`);g.strokeStyle=gr;g.lineWidth=o.tw||2;g.beginPath();g.moveTo(x,y);g.lineTo(x-vx/n*Ln,y-vy/n*Ln);g.stroke()}
     if(k[0]==='@'){g.globalAlpha=al;bird(x,y,G.z,G.a*(o.fl||.3)+j*.8+G.ph,k.slice(6));g.globalAlpha=1}else ds(k,x,y,G.z,0,al,fl)})}}};
 H_.stand={i(c){const o=c.o,n=o.n||2;c.it=Array.from({length:n},(_,j)=>({x:W*(.12+.76*(j+rn()*.6)/n),z:R2(o.z)*K,k:pick(o.s),ph:rn()*6}))},
